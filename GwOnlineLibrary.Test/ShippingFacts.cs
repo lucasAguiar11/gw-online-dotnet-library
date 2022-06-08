@@ -54,7 +54,7 @@ public class ShippingFacts
     {
         var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
 
-        Assert.Equal(shipping.Country, "Brasil");
+        Assert.Equal("Brasil", shipping.Country);
         Assert.Throws<ArgumentNullException>(() => shipping.Country = null);
         Assert.Throws<ArgumentNullException>(() => shipping.Country = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Country = new string('x', 1));
@@ -62,7 +62,7 @@ public class ShippingFacts
 
         var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111",
             "China");
-        Assert.Equal(shipping2.Country, "China");
+        Assert.Equal("China", shipping2.Country);
     }
 
     [Fact(DisplayName = "Shipping: ZipCode validation")]
@@ -75,7 +75,7 @@ public class ShippingFacts
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 7));
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 9));
 
-        Assert.Equal(shipping.ZipCode, "00000000");
+        Assert.Equal("00000000", shipping.ZipCode);
     }
 
     [Fact(DisplayName = "Shipping: DDD validation")]
@@ -88,7 +88,7 @@ public class ShippingFacts
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 1));
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 2));
 
-        Assert.Equal(shipping.Ddd, "11");
+        Assert.Equal("11", shipping.Ddd);
     }
 
     [Fact(DisplayName = "Shipping: Phone validation")]
@@ -101,18 +101,18 @@ public class ShippingFacts
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Phone = new string('x', 1));
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Phone = new string('x', 12));
 
-        Assert.Equal(shipping.Phone, "111111111");
+        Assert.Equal("111111111", shipping.Phone);
     }
 
     [Fact(DisplayName = "Shipping: Methods validation")]
     public void Verify_Methods_Validation()
     {
         var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
-        Assert.Equal(shipping.Methods, Methods.Other);
+        Assert.Equal(Methods.Other, shipping.Methods);
 
         var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111",
             Methods.LowCost);
-        Assert.Equal(shipping2.Methods, Methods.LowCost);
+        Assert.Equal(Methods.LowCost, shipping2.Methods);
     }
 
     [Fact(DisplayName = "Shipping: constructor")]
@@ -121,7 +121,7 @@ public class ShippingFacts
         var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111"
             , "China", Methods.LowCost);
         
-        Assert.Equal(shipping2.Country, "China");
-        Assert.Equal(shipping2.Methods, Methods.LowCost);
+        Assert.Equal("China", shipping2.Country);
+        Assert.Equal(Methods.LowCost, shipping2.Methods);
     }
 }

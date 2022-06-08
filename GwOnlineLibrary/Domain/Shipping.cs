@@ -42,7 +42,6 @@ public class Shipping
         Methods = Methods.Other;
     }
 
-
     public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,
         string phone, Methods method)
     {
@@ -76,6 +75,8 @@ public class Shipping
     /// <summary>
     /// Customer's first name
     /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 50 characters</exception>
     public string FirstName
     {
         get => _firstName;
@@ -95,6 +96,8 @@ public class Shipping
     /// <summary>
     /// Customer's last name
     /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 50 characters</exception>
     public string LastName
     {
         get => _lastName;
@@ -114,6 +117,8 @@ public class Shipping
     /// <summary>
     /// Name of the street
     /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have between 4 and 50 characters</exception>
     public string Street
     {
         get => _street;
@@ -133,6 +138,8 @@ public class Shipping
     /// <summary>
     /// Address number
     /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The maximum value for this field is 50</exception>
     public string Number
     {
         get => _number;
@@ -143,7 +150,7 @@ public class Shipping
 
             if (value.Length > 50)
                 throw new ArgumentOutOfRangeException(nameof(Number),
-                    "The maximum value for this field is 100");
+                    "The maximum value for this field is 50");
 
             _number = value;
         }
@@ -152,6 +159,8 @@ public class Shipping
     /// <summary>
     /// Name of the country
     /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 60 characters</exception>
     public string Country
     {
         get => _country;
@@ -171,6 +180,8 @@ public class Shipping
     /// <summary>
     /// Address zip code
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">This field must be 8 characters long</exception>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
     public string ZipCode
     {
         get => _zipCode;
@@ -190,6 +201,8 @@ public class Shipping
     /// <summary>
     /// Customer's phone DDD
     /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must be 2 characters long</exception>
     public string Ddd
     {
         get => _ddd;
@@ -208,6 +221,8 @@ public class Shipping
     /// <summary>
     /// Customer's phone number
     /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 60 characters</exception>
     public string Phone
     {
         get => _phone;
