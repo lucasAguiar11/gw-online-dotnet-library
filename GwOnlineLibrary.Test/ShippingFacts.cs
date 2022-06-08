@@ -1,4 +1,5 @@
 ﻿using GwOnlineLibrary.Domain;
+using GwOnlineLibrary.Domain.Enums;
 
 namespace GwOnlineLibrary.Test;
 
@@ -58,8 +59,12 @@ public class ShippingFacts
         Assert.Throws<ArgumentNullException>(() => shipping.Country = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Country = new string('x', 1));
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Country = new string('x', 61));
+
+        var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111",
+            "China");
+        Assert.Equal(shipping2.Country, "China");
     }
-    
+
     [Fact(DisplayName = "Shipping: ZipCode validation")]
     public void Verify_ZipCode_Validation()
     {
@@ -69,7 +74,7 @@ public class ShippingFacts
         Assert.Throws<ArgumentNullException>(() => shipping.ZipCode = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 7));
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 9));
-        
+
         Assert.Equal(shipping.ZipCode, "00000000");
     }
 
@@ -82,10 +87,10 @@ public class ShippingFacts
         Assert.Throws<ArgumentNullException>(() => shipping.ZipCode = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 1));
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 2));
-        
+
         Assert.Equal(shipping.Ddd, "11");
     }
-    
+
     [Fact(DisplayName = "Shipping: Phone validation")]
     public void Verify_Phone_Validation()
     {
@@ -95,7 +100,28 @@ public class ShippingFacts
         Assert.Throws<ArgumentNullException>(() => shipping.Phone = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Phone = new string('x', 1));
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Phone = new string('x', 12));
-        
+
         Assert.Equal(shipping.Phone, "111111111");
+    }
+
+    [Fact(DisplayName = "Shipping: Methods validation")]
+    public void Verify_Methods_Validation()
+    {
+        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
+        Assert.Equal(shipping.Methods, Methods.Other);
+
+        var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111",
+            Methods.LowCost);
+        Assert.Equal(shipping2.Methods, Methods.LowCost);
+    }
+
+    [Fact(DisplayName = "Shipping: constructor")]
+    public void Verify_Constructor()
+    {
+        var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111"
+            , "China", Methods.LowCost);
+        
+        Assert.Equal(shipping2.Country, "China");
+        Assert.Equal(shipping2.Methods, Methods.LowCost);
     }
 }

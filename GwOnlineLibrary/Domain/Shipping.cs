@@ -29,6 +29,21 @@ public class Shipping
     }
 
     public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,
+        string phone, string country)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Street = street;
+        Number = number;
+        ZipCode = zipCode;
+        Ddd = ddd;
+        Phone = phone;
+        Country = country;
+        Methods = Methods.Other;
+    }
+
+
+    public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,
         string phone, Methods method)
     {
         FirstName = firstName;
@@ -43,7 +58,7 @@ public class Shipping
     }
 
     public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,
-        string phone, Methods method, string country)
+        string phone, string country, Methods method)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -178,7 +193,7 @@ public class Shipping
     public string Ddd
     {
         get => _ddd;
-        set
+        init
         {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(Ddd), "This field is required");
