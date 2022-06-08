@@ -5,9 +5,9 @@ namespace GwOnlineLibrary.Domain;
 public class Product
 {
     private string _name;
-    private decimal _price;
-    private int _quantity;
-    private string? _sku;
+    private readonly decimal _price;
+    private readonly int _quantity;
+    private readonly string _sku;
 
     public Product(string name)
     {
@@ -66,7 +66,7 @@ public class Product
     public decimal Price
     {
         get => _price;
-        set
+        init
         {
             if (value < 0.01m)
                 throw new ArgumentOutOfRangeException(nameof(Price), "The minimum value for this field is 0.01");
@@ -82,7 +82,7 @@ public class Product
     public int Quantity
     {
         get => _quantity;
-        set
+        init
         {
             if (value is < 1 or > 999999)
                 throw new ArgumentOutOfRangeException(nameof(Quantity),
@@ -95,13 +95,14 @@ public class Product
     /// <summary>
     /// Unidade de Controle de Estoque (Stock Keeping Unit)
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">The maximum value for this field is 100</exception>
     public string? Sku
     {
         get => _sku;
-        set
+        init
         {
             if (value?.Length > 100)
-                throw new ArgumentOutOfRangeException(nameof(Price), "The maximum value for this field is 100");
+                throw new ArgumentOutOfRangeException(nameof(Sku), "The maximum value for this field is 100");
 
             _sku = value;
         }

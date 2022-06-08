@@ -12,8 +12,10 @@ internal static class Constants
     #region Default Values
 
     internal static int DefaultQuantity => 1;
-    
+
     internal static decimal DefaultPrice => 0.01m;
     
+    internal static string DefaultCountry => "Brasil";
+
     #endregion
 }
