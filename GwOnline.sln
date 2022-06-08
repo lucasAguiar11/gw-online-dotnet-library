@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GwOnlineLibrary", "GwOnlineLibrary\GwOnlineLibrary.csproj", "{2DF80606-F26E-4977-AFD4-23EAF489B554}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GwOnlineLibrary.Test", "GwOnlineLibrary.Test\GwOnlineLibrary.Test.csproj", "{286DBD7F-2827-4CE4-A6F9-D11FBC458CEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GwOnlineLibrary.Test", "GwOnlineLibrary.Test\GwOnlineLibrary.Test.csproj", "{6FFF52C2-3454-4BCC-8D50-2C849653BAB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{2DF80606-F26E-4977-AFD4-23EAF489B554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DF80606-F26E-4977-AFD4-23EAF489B554}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DF80606-F26E-4977-AFD4-23EAF489B554}.Release|Any CPU.Build.0 = Release|Any CPU
-		{286DBD7F-2827-4CE4-A6F9-D11FBC458CEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{286DBD7F-2827-4CE4-A6F9-D11FBC458CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{286DBD7F-2827-4CE4-A6F9-D11FBC458CEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{286DBD7F-2827-4CE4-A6F9-D11FBC458CEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FFF52C2-3454-4BCC-8D50-2C849653BAB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FFF52C2-3454-4BCC-8D50-2C849653BAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FFF52C2-3454-4BCC-8D50-2C849653BAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FFF52C2-3454-4BCC-8D50-2C849653BAB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
