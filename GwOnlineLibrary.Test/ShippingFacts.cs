@@ -60,9 +60,8 @@ public class ShippingFacts
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Country = new string('x', 1));
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Country = new string('x', 61));
 
-        var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111",
-            "China");
-        Assert.Equal("China", shipping2.Country);
+        shipping.Country = "China";
+        Assert.Equal("China", shipping.Country);
     }
 
     [Fact(DisplayName = "Shipping: ZipCode validation")]
@@ -83,10 +82,10 @@ public class ShippingFacts
     {
         var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
 
-        Assert.Throws<ArgumentNullException>(() => shipping.ZipCode = null);
-        Assert.Throws<ArgumentNullException>(() => shipping.ZipCode = "");
-        Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 1));
-        Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 2));
+        Assert.Throws<ArgumentNullException>(() => shipping.Ddd = null);
+        Assert.Throws<ArgumentNullException>(() => shipping.Ddd = "");
+        Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Ddd = new string('x', 1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Ddd = new string('x', 3));
 
         Assert.Equal("11", shipping.Ddd);
     }
@@ -110,18 +109,7 @@ public class ShippingFacts
         var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
         Assert.Equal(Methods.Other, shipping.Methods);
 
-        var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111",
-            Methods.LowCost);
-        Assert.Equal(Methods.LowCost, shipping2.Methods);
-    }
-
-    [Fact(DisplayName = "Shipping: constructor")]
-    public void Verify_Constructor()
-    {
-        var shipping2 = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111"
-            , "China", Methods.LowCost);
-        
-        Assert.Equal("China", shipping2.Country);
-        Assert.Equal(Methods.LowCost, shipping2.Methods);
+        shipping.Methods = Methods.LowCost;
+        Assert.Equal(Methods.LowCost, shipping.Methods);
     }
 }

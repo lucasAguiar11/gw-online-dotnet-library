@@ -12,19 +12,9 @@ public class Billing
     private string _country;
     private string _zipCode;
 
-
-    public Billing(string street, string number, string neighborhood, string city, string state, string country,
-        string zipCode)
+    public Billing()
     {
-        Street = street;
-        Number = number;
-        Neighborhood = neighborhood;
-        City = city;
-        State = state;
-        Country = country;
-        ZipCode = zipCode;
     }
-
 
     public Billing(string street, string number, string neighborhood, string city, string state,
         string zipCode)
@@ -38,7 +28,7 @@ public class Billing
         ZipCode = zipCode;
     }
 
-    
+
     /// <summary>
     /// Name of the street
     /// </summary>
@@ -185,5 +175,16 @@ public class Billing
 
             _zipCode = value;
         }
+    }
+
+    internal void Verify()
+    {
+        Street = Street ?? throw new ArgumentNullException(nameof(Street), "This field is required");
+        Number = Number ?? throw new ArgumentNullException(nameof(Number), "This field is required");
+        Neighborhood = Neighborhood ?? throw new ArgumentNullException(nameof(Neighborhood), "This field is required");
+        City = City ?? throw new ArgumentNullException(nameof(City), "This field is required");
+        State = State ?? throw new ArgumentNullException(nameof(State), "This field is required");
+        Country = Country ?? throw new ArgumentNullException(nameof(Country), "This field is required");
+        ZipCode = ZipCode ?? throw new ArgumentNullException(nameof(ZipCode), "This field is required");
     }
 }

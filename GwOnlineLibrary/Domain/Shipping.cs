@@ -14,6 +14,10 @@ public class Shipping
     private string _ddd;
     private string _phone;
 
+    public Shipping()
+    {
+    }
+
     public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,
         string phone)
     {
@@ -26,49 +30,6 @@ public class Shipping
         Phone = phone;
         Country = Constants.DefaultCountry;
         Methods = Methods.Other;
-    }
-
-    public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,
-        string phone, string country)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        Street = street;
-        Number = number;
-        ZipCode = zipCode;
-        Ddd = ddd;
-        Phone = phone;
-        Country = country;
-        Methods = Methods.Other;
-    }
-
-    public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,
-        string phone, Methods method)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        Street = street;
-        Number = number;
-        ZipCode = zipCode;
-        Ddd = ddd;
-        Phone = phone;
-        Country = Constants.DefaultCountry;
-        Methods = method;
-    }
-
-    public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,
-        string phone, string country, Methods method)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        Street = street;
-        Number = number;
-        ZipCode = zipCode;
-        Ddd = ddd;
-        Phone = phone;
-        Country = Constants.DefaultCountry;
-        Methods = method;
-        Country = country;
     }
 
 
@@ -206,7 +167,7 @@ public class Shipping
     public string Ddd
     {
         get => _ddd;
-        init
+        set
         {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(Ddd), "This field is required");
@@ -243,4 +204,17 @@ public class Shipping
     /// Delivery method
     /// </summary>
     public Methods Methods { get; set; }
+
+
+    internal void Verify()
+    {
+        FirstName = FirstName ?? throw new ArgumentNullException(nameof(FirstName), "This field is required");
+        LastName = LastName ?? throw new ArgumentNullException(nameof(LastName), "This field is required");
+        Street = Street ?? throw new ArgumentNullException(nameof(Street), "This field is required");
+        Number = Number ?? throw new ArgumentNullException(nameof(Number), "This field is required");
+        Country = Country ?? throw new ArgumentNullException(nameof(Country), "This field is required");
+        ZipCode = ZipCode ?? throw new ArgumentNullException(nameof(ZipCode), "This field is required");
+        Ddd = Ddd ?? throw new ArgumentNullException(nameof(Ddd), "This field is required");
+        Phone = Phone ?? throw new ArgumentNullException(nameof(Phone), "This field is required");
+    }
 }

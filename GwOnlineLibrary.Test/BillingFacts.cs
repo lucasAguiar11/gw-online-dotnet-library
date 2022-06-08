@@ -88,9 +88,8 @@ public class BillingFacts
         billing.Country = "country";
         Assert.Equal("country", billing.Country);
 
-        var billing2 = new Billing("street", "number", "neighborhood", "city", "SP", "China", "00000000");
-
-        Assert.Equal("China", billing2.Country);
+        billing.Country = "China";
+        Assert.Equal("China", billing.Country);
     }
 
     [Fact(DisplayName = "Billing: ZipCode validation")]
