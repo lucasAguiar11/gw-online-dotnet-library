@@ -19,7 +19,12 @@ public class Customer
     internal string Password { get; set; }
 
     internal DocumentType DocumentType => Document.Length > 11 ? DocumentType.CNPJ : DocumentType.CPF;
-    
+
+
+    public Customer()
+    {
+        
+    }
     
     public Customer(Billing billing, Shipping shipping, string name,  string ddd, string phone, string email,
         string document, string ip)
@@ -35,7 +40,7 @@ public class Customer
     }
 
     /// <summary>
-    /// Customer's gender
+    /// Customer's gender acceptable values: "M" or "F"
     /// </summary>
     public Gender? Gender { get; set; }
 
@@ -155,7 +160,7 @@ public class Customer
                 throw new ArgumentNullException(nameof(Document), "This field is required");
 
             if (value.Length is not 11 or > 14)
-                throw new ArgumentOutOfRangeException(nameof(Phone),
+                throw new ArgumentOutOfRangeException(nameof(Document),
                     "This field must have 11 or 14 characters");
 
             _document = value;
@@ -189,9 +194,11 @@ public class Customer
 
     /// <summary>
     /// Customer's "FingerPrint"
+    /// Information used to identify the customer device. This information must be used to generate the value assigned to the script field session id on the checkout page
     /// </summary>
     public string FingerPrint { get; set; }
 
+    
     internal void Validate()
     {
         Name = Name ?? throw new ArgumentNullException(nameof(Name), "This field is required");

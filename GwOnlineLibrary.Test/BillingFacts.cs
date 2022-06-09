@@ -8,7 +8,10 @@ public class BillingFacts
     [Fact(DisplayName = "Billing: Street validation")]
     public void Verify_Street_Validation()
     {
-        var billing = new Billing("street", "number", "neighborhood", "city", "SP", "00000000");
+        var billing = new Billing()
+        {
+            Street = "Teste"
+        };
 
         Assert.Throws<ArgumentNullException>(() => billing.Street = null);
         Assert.Throws<ArgumentNullException>(() => billing.Street = "");
@@ -22,7 +25,11 @@ public class BillingFacts
     [Fact(DisplayName = "Billing: Number validation")]
     public void Verify_Number_Validation()
     {
-        var billing = new Billing("street", "number", "neighborhood", "city", "SP", "00000000");
+        var billing = new Billing()
+        {
+            Number = "Teste"
+        };
+        ;
 
         Assert.Throws<ArgumentNullException>(() => billing.Number = null);
         Assert.Throws<ArgumentNullException>(() => billing.Number = "");
@@ -35,7 +42,10 @@ public class BillingFacts
     [Fact(DisplayName = "Billing: Neighborhood validation")]
     public void Verify_Neighborhood_Validation()
     {
-        var billing = new Billing("street", "number", "neighborhood", "city", "SP", "00000000");
+        var billing = new Billing()
+        {
+            Neighborhood = "Teste"
+        };
 
         Assert.Throws<ArgumentNullException>(() => billing.Neighborhood = null);
         Assert.Throws<ArgumentNullException>(() => billing.Neighborhood = "");
@@ -49,7 +59,10 @@ public class BillingFacts
     [Fact(DisplayName = "Billing: City validation")]
     public void Verify_City_Validation()
     {
-        var billing = new Billing("street", "number", "neighborhood", "city", "SP", "00000000");
+        var billing = new Billing()
+        {
+            City = "Teste"
+        };
 
         Assert.Throws<ArgumentNullException>(() => billing.City = null);
         Assert.Throws<ArgumentNullException>(() => billing.City = "");
@@ -62,7 +75,10 @@ public class BillingFacts
     [Fact(DisplayName = "Billing: State validation")]
     public void Verify_State_Validation()
     {
-        var billing = new Billing("street", "number", "neighborhood", "city", "SP", "00000000");
+        var billing = new Billing()
+        {
+            State = "SP"
+        };
 
         Assert.Throws<ArgumentNullException>(() => billing.State = null);
         Assert.Throws<ArgumentNullException>(() => billing.State = "");
@@ -76,7 +92,7 @@ public class BillingFacts
     [Fact(DisplayName = "Billing: Country validation")]
     public void Verify_Country_Validation()
     {
-        var billing = new Billing("street", "number", "neighborhood", "city", "SP", "00000000");
+        var billing = new Billing();
 
         Assert.Equal("Brasil", billing.Country);
 
@@ -95,7 +111,10 @@ public class BillingFacts
     [Fact(DisplayName = "Billing: ZipCode validation")]
     public void Verify_ZipCode_Validation()
     {
-        var billing = new Billing("street", "number", "neighborhood", "city", "SP", "00000000");
+        var billing = new Billing()
+        {
+            ZipCode = "00000000",
+        };
 
         Assert.Throws<ArgumentNullException>(() => billing.ZipCode = null);
         Assert.Throws<ArgumentNullException>(() => billing.ZipCode = "");

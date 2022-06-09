@@ -14,6 +14,7 @@ public class Billing
 
     public Billing()
     {
+        Country = Constants.DefaultCountry;
     }
 
     public Billing(string street, string number, string neighborhood, string city, string state,

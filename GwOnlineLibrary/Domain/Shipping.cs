@@ -16,6 +16,8 @@ public class Shipping
 
     public Shipping()
     {
+        Country = Constants.DefaultCountry;
+        Methods = Methods.Other;
     }
 
     public Shipping(string firstName, string lastName, string street, string number, string zipCode, string ddd,

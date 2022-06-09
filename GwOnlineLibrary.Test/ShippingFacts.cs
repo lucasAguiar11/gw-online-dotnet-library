@@ -9,7 +9,10 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: FirstName validation")]
     public void Verify_Name_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
+        var shipping = new Shipping
+        {
+            FirstName = "Teste"
+        };
 
         Assert.Throws<ArgumentNullException>(() => shipping.FirstName = null);
         Assert.Throws<ArgumentNullException>(() => shipping.FirstName = "");
@@ -20,8 +23,10 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: LastName validation")]
     public void Verify_LastName_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
-
+        var shipping = new Shipping
+        {
+            LastName = "Teste"
+        };
         Assert.Throws<ArgumentNullException>(() => shipping.LastName = null);
         Assert.Throws<ArgumentNullException>(() => shipping.LastName = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.LastName = new string('x', 1));
@@ -31,8 +36,10 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: Street validation")]
     public void Verify_Street_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
-
+        var shipping = new Shipping
+        {
+            Street = "Teste"
+        };
         Assert.Throws<ArgumentNullException>(() => shipping.Street = null);
         Assert.Throws<ArgumentNullException>(() => shipping.Street = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Street = new string('x', 2));
@@ -42,8 +49,10 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: Number validation")]
     public void Verify_Number_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
-
+        var shipping = new Shipping
+        {
+            Number = "1223"
+        };
         Assert.Throws<ArgumentNullException>(() => shipping.Number = null);
         Assert.Throws<ArgumentNullException>(() => shipping.Number = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Number = new string('x', 51));
@@ -52,7 +61,7 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: Country validation")]
     public void Verify_Country_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
+        var shipping = new Shipping();
 
         Assert.Equal("Brasil", shipping.Country);
         Assert.Throws<ArgumentNullException>(() => shipping.Country = null);
@@ -67,8 +76,10 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: ZipCode validation")]
     public void Verify_ZipCode_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
-
+        var shipping = new Shipping
+        {
+            ZipCode = "00000000"
+        };
         Assert.Throws<ArgumentNullException>(() => shipping.ZipCode = null);
         Assert.Throws<ArgumentNullException>(() => shipping.ZipCode = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.ZipCode = new string('x', 7));
@@ -80,8 +91,10 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: DDD validation")]
     public void Verify_Ddd_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
-
+        var shipping = new Shipping
+        {
+            Ddd = "11"
+        };
         Assert.Throws<ArgumentNullException>(() => shipping.Ddd = null);
         Assert.Throws<ArgumentNullException>(() => shipping.Ddd = "");
         Assert.Throws<ArgumentOutOfRangeException>(() => shipping.Ddd = new string('x', 1));
@@ -93,7 +106,10 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: Phone validation")]
     public void Verify_Phone_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
+        var shipping = new Shipping
+        {
+            Phone = "111111111"
+        };
 
         Assert.Throws<ArgumentNullException>(() => shipping.Phone = null);
         Assert.Throws<ArgumentNullException>(() => shipping.Phone = "");
@@ -106,7 +122,8 @@ public class ShippingFacts
     [Fact(DisplayName = "Shipping: Methods validation")]
     public void Verify_Methods_Validation()
     {
-        var shipping = new Shipping("FirstName", "LastName", "Street", "Number", "00000000", "11", "111111111");
+        var shipping = new Shipping();
+
         Assert.Equal(Methods.Other, shipping.Methods);
 
         shipping.Methods = Methods.LowCost;

@@ -4,22 +4,22 @@ namespace GwOnlineLibrary.Domain.Enums;
 
 public enum Methods
 {
-    [Description("Same day delivery method")]
+    [Description("Delivery at the same day")]
     SameDay,
 
-    [Description("Next day delivery method")]
+    [Description("Delibery at the next day")]
     NextDay,
 
-    [Description("Delivery method in two days")]
+    [Description("Delivery in 2 days")]
     TwoDay,
 
-    [Description("Delivery method in three days")]
+    [Description("Delivery in 3 days")]
     ThreeDay,
 
     [Description("Low cost delivery method")]
     LowCost,
 
-    [Description("Pick up in store")]
+    [Description("Receive in the store")]
     Pickup,
 
     [Description("Other means of delivery")]
