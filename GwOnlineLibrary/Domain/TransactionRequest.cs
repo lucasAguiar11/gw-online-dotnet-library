@@ -1,4 +1,6 @@
-﻿using GwOnlineLibrary.Domain.Enums;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using GwOnlineLibrary.Domain.Enums;
 
 namespace GwOnlineLibrary.Domain;
 
@@ -37,6 +39,7 @@ public class TransactionRequest
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
+    [JsonPropertyName("pan")]
     public string Pan
     {
         get => _pan;
@@ -56,6 +59,7 @@ public class TransactionRequest
     /// <summary>
     /// 
     /// </summary>
+    [JsonPropertyName("capture")]
     public bool Capture { get; set; }
 
     /// <summary>
@@ -63,6 +67,7 @@ public class TransactionRequest
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
+    [JsonPropertyName("cardholderName")]
     public string CardHolderName
     {
         get => _cardHolderName;
@@ -84,6 +89,7 @@ public class TransactionRequest
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
+    [JsonPropertyName("expirationDate")]
     public string ExpirationDate
     {
         get => _expirationDate;
@@ -103,12 +109,14 @@ public class TransactionRequest
     /// <summary>
     /// Indication of availability of CVV. Available values: "E"(present), "NE"(absent), "U"(illegible) or "NR"(unconsidered)
     /// </summary>
+    [JsonPropertyName("cvvStatus")]
     public CvvStatus CvvStatus { get; set; }
 
     /// <summary>
     /// Card Code Verification
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
+    [JsonPropertyName("cvv")]
     public string Cvv
     {
         get => _cvv;
@@ -128,12 +136,14 @@ public class TransactionRequest
     /// <summary>
     /// Card Association. Acceptable values: "MASTERCARD", "VISA", "ELO CREDITO", "DINERS", "HIPERCARD" or "AMEX"
     /// </summary>
+    [JsonPropertyName("brand")]
     public Brand Brand { get; set; }
 
     /// <summary>
     /// Transaction amount
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
+    [JsonPropertyName("amount")]
     public decimal Amount
     {
         get => _amount;
@@ -149,17 +159,20 @@ public class TransactionRequest
     /// <summary>
     /// Transaction date. Format: "AAAA-MM-DDTHH:mm:ss"
     /// </summary>
+    [JsonPropertyName("date")]
     public DateTime Date { get; set; }
 
     /// <summary>
     /// Payment type. Acceptable values: "V"(normal credit), "E"(Instalment by Issuer) or "L"(Instalment by merchant)
     /// </summary>
+    [JsonPropertyName("paymentType")]
     public PaymentType PaymentType { get; set; }
 
     /// <summary>
     /// Number of installments
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
+    [JsonPropertyName("installments")]
     public int Installments
     {
         get => _installments;
@@ -177,6 +190,7 @@ public class TransactionRequest
     /// Connection source
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
+    [JsonPropertyName("site")]
     public string Site
     {
         get => _site;
@@ -192,22 +206,26 @@ public class TransactionRequest
     /// <summary>
     /// Flag to be setup as split
     /// </summary>
+    [JsonPropertyName("splitModel")]
     public bool SplitMode { get; set; }
 
     /// <summary>
     /// Sale channel
     /// </summary>
+    [JsonPropertyName("sellerChannel")]
     public string SellerChannel { get; set; }
 
     /// <summary>
     /// Product type
     /// </summary>
+    [JsonPropertyName("productsCategory")]
     public string ProductsCategory { get; set; }
 
     /// <summary>
     /// Transaction Customer
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
+    [JsonPropertyName("customer")]
     public Customer Customer
     {
         get => _customer;
@@ -219,6 +237,7 @@ public class TransactionRequest
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="InvalidOperationException"></exception>
+    [JsonPropertyName("products")]
     public List<Product> Products
     {
         get => _products;
@@ -244,5 +263,13 @@ public class TransactionRequest
         Site = Site ?? throw new ArgumentNullException(nameof(Site), "This field is required");
         Customer = Customer ?? throw new ArgumentNullException(nameof(Customer), "This field is required");
         Products = Products ?? throw new ArgumentNullException(nameof(Products), "This field is required");
+
+        Customer.Verify();
+    }
+
+    internal string ToJson()
+    {
+        var options = new JsonSerializerOptions { Converters = { new JsonStringEnumConverter() } };
+        return JsonSerializer.Serialize(this, options);
     }
 }

@@ -1,4 +1,5 @@
-﻿using GwOnlineLibrary.Domain.Enums;
+﻿using System.Text.Json.Serialization;
+using GwOnlineLibrary.Domain.Enums;
 using GwOnlineLibrary.Utilities;
 
 namespace GwOnlineLibrary.Domain;
@@ -13,6 +14,8 @@ public class Shipping
     private string _zipCode;
     private string _ddd;
     private string _phone;
+    private string _neighborhood;
+    private string _state;
 
     public Shipping()
     {
@@ -40,6 +43,7 @@ public class Shipping
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 50 characters</exception>
+    [JsonPropertyName("firtName")]
     public string FirstName
     {
         get => _firstName;
@@ -61,6 +65,7 @@ public class Shipping
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 50 characters</exception>
+    [JsonPropertyName("lastName")]
     public string LastName
     {
         get => _lastName;
@@ -82,6 +87,7 @@ public class Shipping
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 4 and 50 characters</exception>
+    [JsonPropertyName("street")]
     public string Street
     {
         get => _street;
@@ -103,6 +109,7 @@ public class Shipping
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">The maximum value for this field is 50</exception>
+    [JsonPropertyName("number")]
     public string Number
     {
         get => _number;
@@ -118,12 +125,60 @@ public class Shipping
             _number = value;
         }
     }
+    
+    
+    /// <summary>
+    /// Address neighborhood
+    /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have between 4 and 50 characters</exception>
+    [JsonPropertyName("neighborhood")]
+    public string Neighborhood
+    {
+        get => _neighborhood;
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(Neighborhood), "This field is required");
+
+            if (value.Length is < 4 or > 50)
+                throw new ArgumentOutOfRangeException(nameof(Street),
+                    "This field must have between 4 and 50 characters");
+
+            _neighborhood = value;
+        }
+    }
+
+    
+    /// <summary>
+    /// Address state
+    /// </summary>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must be 2 characters long</exception>
+    [JsonPropertyName("state")]
+    public string State
+    {
+        get => _state;
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(State), "This field is required");
+
+            if (value.Length != 2)
+                throw new ArgumentOutOfRangeException(nameof(State),
+                    "This field must be 2 characters long");
+
+            _state = value;
+        }
+    }
+
 
     /// <summary>
     /// Name of the country
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 60 characters</exception>
+    [JsonPropertyName("country")]
     public string Country
     {
         get => _country;
@@ -145,6 +200,7 @@ public class Shipping
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">This field must be 8 characters long</exception>
     /// <exception cref="ArgumentNullException">This field is required</exception>
+    [JsonPropertyName("zipcode")]
     public string ZipCode
     {
         get => _zipCode;
@@ -166,6 +222,7 @@ public class Shipping
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must be 2 characters long</exception>
+    [JsonPropertyName("ddd")]
     public string Ddd
     {
         get => _ddd;
@@ -186,6 +243,7 @@ public class Shipping
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 60 characters</exception>
+    [JsonPropertyName("phone")]
     public string Phone
     {
         get => _phone;
@@ -205,6 +263,7 @@ public class Shipping
     /// <summary>
     /// Delivery method
     /// </summary>
+    [JsonPropertyName("method")]
     public Methods Methods { get; set; }
 
 
@@ -216,6 +275,8 @@ public class Shipping
         Number = Number ?? throw new ArgumentNullException(nameof(Number), "This field is required");
         Country = Country ?? throw new ArgumentNullException(nameof(Country), "This field is required");
         ZipCode = ZipCode ?? throw new ArgumentNullException(nameof(ZipCode), "This field is required");
+        State = State ?? throw new ArgumentNullException(nameof(State), "This field is required");
+        Neighborhood = Neighborhood ?? throw new ArgumentNullException(nameof(Neighborhood), "This field is required");
         Ddd = Ddd ?? throw new ArgumentNullException(nameof(Ddd), "This field is required");
         Phone = Phone ?? throw new ArgumentNullException(nameof(Phone), "This field is required");
     }

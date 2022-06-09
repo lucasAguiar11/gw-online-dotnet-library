@@ -1,4 +1,5 @@
-﻿using GwOnlineLibrary.Utilities;
+﻿using System.Text.Json.Serialization;
+using GwOnlineLibrary.Utilities;
 
 namespace GwOnlineLibrary.Domain;
 
@@ -35,6 +36,7 @@ public class Billing
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 4 and 50 characters</exception>
     /// <exception cref="ArgumentNullException">This field is required</exception>
+    [JsonPropertyName("street")]
     public string Street
     {
         get => _street;
@@ -56,6 +58,7 @@ public class Billing
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The maximum value for this field is 50</exception>
     /// <exception cref="ArgumentNullException">This field is required</exception>
+    [JsonPropertyName("number")]
     public string Number
     {
         get => _number;
@@ -77,6 +80,7 @@ public class Billing
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 4 and 50 characters</exception>
+    [JsonPropertyName("neighborhood")]
     public string Neighborhood
     {
         get => _neighborhood;
@@ -98,6 +102,7 @@ public class Billing
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 1 and 60 characters</exception>
+    [JsonPropertyName("city")]
     public string City
     {
         get => _city;
@@ -119,6 +124,7 @@ public class Billing
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must be 2 characters long</exception>
+    [JsonPropertyName("state")]
     public string State
     {
         get => _state;
@@ -141,6 +147,7 @@ public class Billing
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 60 characters</exception>
+    [JsonPropertyName("country")]
     public string Country
     {
         get => _country;
@@ -162,6 +169,7 @@ public class Billing
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">This field must be 8 characters long</exception>
     /// <exception cref="ArgumentNullException">This field is required</exception>
+    [JsonPropertyName("zipcode")]
     public string ZipCode
     {
         get => _zipCode;

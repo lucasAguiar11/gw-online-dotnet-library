@@ -1,4 +1,5 @@
-﻿using GwOnlineLibrary.Domain.Enums;
+﻿using System.Text.Json.Serialization;
+using GwOnlineLibrary.Domain.Enums;
 using GwOnlineLibrary.Utilities;
 
 namespace GwOnlineLibrary.Domain;
@@ -13,20 +14,24 @@ public class Customer
     private string _ip;
     private Billing _billing;
     private Shipping _shipping;
+    private DateTime _birthDate;
 
     internal string Login { get; set; }
 
     internal string Password { get; set; }
 
-    internal DocumentType DocumentType => Document.Length > 11 ? DocumentType.CNPJ : DocumentType.CPF;
+    /// <summary>
+    /// Customer's document type
+    /// </summary>
+    [JsonPropertyName("documentType")]
+    public DocumentType DocumentType => Document.Length > 11 ? DocumentType.CNPJ : DocumentType.CPF;
 
 
     public Customer()
     {
-        
     }
-    
-    public Customer(Billing billing, Shipping shipping, string name,  string ddd, string phone, string email,
+
+    public Customer(Billing billing, Shipping shipping, string name, string ddd, string phone, string email,
         string document, string ip)
     {
         Name = name;
@@ -42,6 +47,7 @@ public class Customer
     /// <summary>
     /// Customer's gender acceptable values: "M" or "F"
     /// </summary>
+    [JsonPropertyName("gender")]
     public Gender? Gender { get; set; }
 
     /// <summary>
@@ -49,6 +55,7 @@ public class Customer
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 50 characters</exception>
+    [JsonPropertyName("name")]
     public string Name
     {
         get => _name;
@@ -70,6 +77,7 @@ public class Customer
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must be 2 characters long</exception>
+    [JsonPropertyName("ddd")]
     public string Ddd
     {
         get => _ddd;
@@ -90,6 +98,7 @@ public class Customer
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 60 characters</exception>
+    [JsonPropertyName("phone")]
     public string Phone
     {
         get => _phone;
@@ -111,6 +120,7 @@ public class Customer
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentException">Invalid email format</exception>
+    [JsonPropertyName("email")]
     public string Email
     {
         get => _email;
@@ -131,6 +141,7 @@ public class Customer
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentException">Invalid ip format</exception>
+    [JsonPropertyName("ip")]
     public string Ip
     {
         get => _ip;
@@ -151,6 +162,7 @@ public class Customer
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
     /// <exception cref="ArgumentOutOfRangeException">This field must have 11 or 14 characters</exception>
+    [JsonPropertyName("document")]
     public string Document
     {
         get => _document;
@@ -166,11 +178,12 @@ public class Customer
             _document = value;
         }
     }
-    
+
     /// <summary>
     /// Billing information
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
+    [JsonPropertyName("billing")]
     public Billing Billing
     {
         get => _billing;
@@ -181,6 +194,7 @@ public class Customer
     /// Shipping information
     /// </summary>
     /// <exception cref="ArgumentNullException">This field is required</exception>
+    [JsonPropertyName("shipping")]
     public Shipping Shipping
     {
         get => _shipping;
@@ -190,16 +204,23 @@ public class Customer
     /// <summary>
     /// Customer's birth date
     /// </summary>
-    public DateTime BirthDate { get; set; }
+    public DateTime BirthDate
+    {
+        set => _birthDate = value;
+    }
 
+    [JsonPropertyName("birthDate")]
+    public string BirthDateFormatted => _birthDate.ToString("dd/MM/yyyy"); 
+    
     /// <summary>
     /// Customer's "FingerPrint"
     /// Information used to identify the customer device. This information must be used to generate the value assigned to the script field session id on the checkout page
     /// </summary>
+    [JsonPropertyName("fingerPrint2")]
     public string FingerPrint { get; set; }
 
-    
-    internal void Validate()
+
+    internal void Verify()
     {
         Name = Name ?? throw new ArgumentNullException(nameof(Name), "This field is required");
         Phone = Phone ?? throw new ArgumentNullException(nameof(Phone), "This field is required");
@@ -209,5 +230,8 @@ public class Customer
         Ip = Ip ?? throw new ArgumentNullException(nameof(Ip), "This field is required");
         Billing = Billing ?? throw new ArgumentNullException(nameof(Billing), "This field is required");
         Shipping = Shipping ?? throw new ArgumentNullException(nameof(Shipping), "This field is required");
+
+        Billing.Verify();
+        Shipping.Verify();
     }
 }

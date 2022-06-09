@@ -1,6 +1,6 @@
 ﻿using GwOnlineLibrary.Domain;
 
-namespace GwOnlineLibrary.Test;
+namespace GwOnlineLibrary.Test.DomainFacts;
 
 [Trait("Category", "Domain")]
 public class TransactionRequestFacts

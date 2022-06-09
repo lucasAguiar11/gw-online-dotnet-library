@@ -1,7 +1,7 @@
 ﻿using GwOnlineLibrary.Domain;
 using GwOnlineLibrary.Domain.Enums;
 
-namespace GwOnlineLibrary.Test;
+namespace GwOnlineLibrary.Test.DomainFacts;
 
 [Trait("Category", "Domain")]
 public class ShippingFacts

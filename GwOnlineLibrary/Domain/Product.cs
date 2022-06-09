@@ -1,4 +1,5 @@
-﻿using GwOnlineLibrary.Utilities;
+﻿using System.Text.Json.Serialization;
+using GwOnlineLibrary.Utilities;
 
 namespace GwOnlineLibrary.Domain;
 
@@ -43,6 +44,7 @@ public class Product
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">This field must have between 4 and 100 characters</exception>
     /// <exception cref="ArgumentNullException">This field is required</exception>
+    [JsonPropertyName("name")]
     public string Name
     {
         get => _name;
@@ -63,6 +65,7 @@ public class Product
     /// Preço unitário do produto
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The minimum value for this field is 0.01</exception>
+    [JsonPropertyName("price")]
     public decimal Price
     {
         get => _price;
@@ -79,6 +82,7 @@ public class Product
     /// Quantidade do produto. Valor mínimo de 1.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">This field must have a value between 1 and 999999</exception>
+    [JsonPropertyName("quantity")]
     public int Quantity
     {
         get => _quantity;
@@ -96,6 +100,7 @@ public class Product
     /// Unidade de Controle de Estoque (Stock Keeping Unit)
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The maximum value for this field is 100</exception>
+    [JsonPropertyName("sku")]
     public string Sku
     {
         get => _sku;
