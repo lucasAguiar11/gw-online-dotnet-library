@@ -21,6 +21,21 @@ public class GwOnline : IGwOnline
         _api = new Api(test ? Configuration.UrlTest : Configuration.UrlPrd, user, password);
     }
 
+    private async Task GetTokenAsync()
+    {
+        if (_lastTokenUpdate?.AddMinutes(25) > DateTimeOffset.Now)
+            return;
+
+        var gwToken = await _api.LogonAsync();
+
+        if (gwToken == null)
+            throw new ArgumentNullException(nameof(gwToken), "This field is required");
+
+        if (string.IsNullOrEmpty(gwToken.Token))
+            throw new ArgumentException("Invalid token", nameof(gwToken));
+
+        _lastTokenUpdate = DateTimeOffset.Now;
+    }
 
     /// <summary>
     /// The Celer Network is prepared to work with a single transaction for card acceptance (the authorization and capture use the same transaction).
@@ -57,23 +72,25 @@ public class GwOnline : IGwOnline
         await GetTokenAsync();
 
         var result = await _api.TransactionStatusAsync(tid);
-        
+
         return result;
     }
 
-    private async Task GetTokenAsync()
+    /// <summary>
+    /// Considering that Celer works with single transaction, we also work with just one kind of message to totally cancel the original sale.
+    /// </summary>
+    /// <param name="tid"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task<CancellationResult> CancellationAsync(string tid)
     {
-        if (_lastTokenUpdate?.AddMinutes(25) > DateTimeOffset.Now)
-            return;
+        if (string.IsNullOrEmpty(tid))
+            throw new ArgumentNullException(nameof(tid), "This field is required");
 
-        var gwToken = await _api.LogonAsync();
+        await GetTokenAsync();
 
-        if (gwToken == null)
-            throw new ArgumentNullException(nameof(gwToken), "This field is required");
+        var result = await _api.CancellationAsync(tid);
 
-        if (string.IsNullOrEmpty(gwToken.Token))
-            throw new ArgumentException("Invalid token", nameof(gwToken));
-
-        _lastTokenUpdate = DateTimeOffset.Now;
+        return result;
     }
 }

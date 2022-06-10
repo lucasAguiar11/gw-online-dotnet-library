@@ -7,4 +7,5 @@ internal interface IGwOnline
 {
     Task<TransactionResult> SaleAsync([NotNull] TransactionRequest request);
     Task<StatusResult> TransactionStatusAsync([NotNull] string tid);
+    Task<CancellationResult> CancellationAsync([NotNull] string tid);
 }

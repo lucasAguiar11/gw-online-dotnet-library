@@ -26,7 +26,7 @@ public class TransactionStatusFacts
         Assert.True(result.Status);
     }
 
-    [Fact(DisplayName = "Status: transaction status err")]
+    [Fact(DisplayName = "Status: without transaction")]
     public async Task TransactionStatus_Without_Parameter()
     {
         var gw = new GwOnline(_user, _pass, true);
@@ -95,6 +95,7 @@ public class TransactionStatusFacts
         var result = await gw.TransactionStatusAsync(transactionResult.Tid);
         _testOutputHelper.WriteLine("status transaction ({0}) => {1}", transactionResult.Tid,
             JsonSerializer.Serialize(result));
+        
         Assert.True(result.Status);
     }
 }

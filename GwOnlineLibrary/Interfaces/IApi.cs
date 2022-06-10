@@ -8,4 +8,5 @@ internal interface IApi
     Task<string> GetKeyAsync();
     Task<TransactionResult> TransactionAsync(TransactionRequest request);
     Task<StatusResult> TransactionStatusAsync(string nsu);
+    Task<CancellationResult> CancellationAsync(string nsu);
 }

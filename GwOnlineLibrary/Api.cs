@@ -78,9 +78,9 @@ internal class Api : IApi
         var responseString = await response.Content.ReadAsStringAsync();
         var gwToken = JsonSerializer.Deserialize<TokenGw>(responseString, _jsonOptions);
 
-        if(gwToken == null)
+        if (gwToken == null)
             throw new Exception("Invalid response from gw");
-        
+
         _client.DefaultRequestHeaders.Add("x-access-token", gwToken.Token);
 
         return gwToken;
@@ -109,7 +109,6 @@ internal class Api : IApi
         content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
         var response = await _client.PostAsync("/v2/transaction", content);
-        response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
 
@@ -125,11 +124,25 @@ internal class Api : IApi
         content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
         var response = await _client.PostAsync("/v1/verify", content);
-        response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
 
         var result = JsonSerializer.Deserialize<StatusResult>(json, _jsonOptions);
+
+        return result;
+    }
+
+    public async Task<CancellationResult> CancellationAsync(string nsu)
+    {
+        var request = JsonSerializer.Serialize(new { tid = nsu });
+        var content = new StringContent(request, Encoding.UTF8, "application/json");
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        var response = await _client.PostAsync("/v1/cancellation", content);
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        var result = JsonSerializer.Deserialize<CancellationResult>(json, _jsonOptions);
 
         return result;
     }
