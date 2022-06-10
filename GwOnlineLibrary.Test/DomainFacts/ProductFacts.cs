@@ -49,8 +49,5 @@ public class ProductFacts
 
         var product = new Product("Product", 100, 2, "SKU");
         Assert.Equal("SKU", product.Sku);
-
-        var product2 = new Product("Product", 100, 2);
-        Assert.Null(product2.Sku);
     }
 }

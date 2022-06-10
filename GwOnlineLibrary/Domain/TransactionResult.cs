@@ -33,4 +33,10 @@ public class TransactionResult
     /// </summary>
     [JsonPropertyName("details")]
     public string Details { get; set; }
+
+    /// <summary>
+    /// Transaction receipt (available for approved transaction)
+    /// </summary>
+    [JsonPropertyName("receipt")]
+    public string Receipt { get; set; }
 }

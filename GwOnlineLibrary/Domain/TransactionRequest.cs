@@ -57,10 +57,10 @@ public class TransactionRequest
     }
 
     /// <summary>
-    /// 
+    /// Indicates the use of capture
     /// </summary>
     [JsonPropertyName("capture")]
-    public bool Capture { get; set; }
+    public bool Capture { get; set; } = true;
 
     /// <summary>
     /// Cardholder name embossed on the card
@@ -206,7 +206,7 @@ public class TransactionRequest
     /// <summary>
     /// Flag to be setup as split
     /// </summary>
-    [JsonPropertyName("splitModel")]
+    [JsonPropertyName("splitMode")]
     public bool SplitMode { get; set; }
 
     /// <summary>
