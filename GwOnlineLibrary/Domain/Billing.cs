@@ -15,7 +15,7 @@ public class Billing
 
     public Billing()
     {
-        Country = Constants.DefaultCountry;
+        Country = Configuration.DefaultCountry;
     }
 
     public Billing(string street, string number, string neighborhood, string city, string state,
@@ -26,7 +26,7 @@ public class Billing
         Neighborhood = neighborhood;
         City = city;
         State = state;
-        Country = Constants.DefaultCountry;
+        Country = Configuration.DefaultCountry;
         ZipCode = zipCode;
     }
 

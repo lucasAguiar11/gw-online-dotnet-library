@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using GwOnlineLibrary.Domain;
 using GwOnlineLibrary.Domain.Enums;
+using GwOnlineLibrary.Utilities;
 using Xunit.Abstractions;
 
 namespace GwOnlineLibrary.Test;
@@ -37,7 +38,6 @@ public class SaleFacts
     public async Task Verify_Sale_Call()
     {
         var gw = new GwOnline(_user, _pass, true);
-
         var request = new TransactionRequest()
         {
             Pan = "123123123121",

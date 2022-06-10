@@ -19,7 +19,7 @@ public class Shipping
 
     public Shipping()
     {
-        Country = Constants.DefaultCountry;
+        Country = Configuration.DefaultCountry;
         Methods = Methods.Other;
     }
 
@@ -33,7 +33,7 @@ public class Shipping
         ZipCode = zipCode;
         Ddd = ddd;
         Phone = phone;
-        Country = Constants.DefaultCountry;
+        Country = Configuration.DefaultCountry;
         Methods = Methods.Other;
     }
 

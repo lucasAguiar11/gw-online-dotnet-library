@@ -8,7 +8,7 @@ public class GwOnline : IGwOnline
 {
     private DateTimeOffset? _lastTokenUpdate;
 
-    private readonly Api _api;
+    private readonly IApi _api;
 
     public GwOnline(string user, string password, bool test = false)
     {
@@ -18,12 +18,13 @@ public class GwOnline : IGwOnline
         if (string.IsNullOrEmpty(password))
             throw new ArgumentNullException(nameof(password), "Password cannot be null or empty");
 
-        _api = new Api(test ? Constants.UrlTest : Constants.UrlPrd, user, password);
+        _api = new Api(test ? Configuration.UrlTest : Configuration.UrlPrd, user, password);
     }
 
 
     /// <summary>
-    /// 
+    /// The Celer Network is prepared to work with a single transaction for card acceptance (the authorization and capture use the same transaction).
+    /// Therefore, it's not necessary send any additional transaction to process the sale.
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>

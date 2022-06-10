@@ -230,7 +230,7 @@ public class Customer
         Ip = Ip ?? throw new ArgumentNullException(nameof(Ip), "This field is required");
         Billing = Billing ?? throw new ArgumentNullException(nameof(Billing), "This field is required");
         Shipping = Shipping ?? throw new ArgumentNullException(nameof(Shipping), "This field is required");
-
+        
         Billing.Verify();
         Shipping.Verify();
     }

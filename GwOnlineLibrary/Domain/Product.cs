@@ -13,15 +13,17 @@ public class Product
     public Product(string name)
     {
         Name = name;
-        Price = Constants.DefaultPrice;
-        Quantity = Constants.DefaultQuantity;
+        Price = Configuration.DefaultPrice;
+        Quantity = Configuration.DefaultQuantity;
+        Sku = name;
     }
 
     public Product(string name, decimal price)
     {
         Name = name;
         Price = price;
-        Quantity = Constants.DefaultQuantity;
+        Quantity = Configuration.DefaultQuantity;
+        Sku = name;
     }
 
     public Product(string name, decimal price, int quantity)
@@ -29,6 +31,7 @@ public class Product
         Name = name;
         Price = price;
         Quantity = quantity;
+        Sku = name;
     }
 
     public Product(string name, decimal price, int quantity, string sku)
@@ -106,6 +109,9 @@ public class Product
         get => _sku;
         set
         {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(Name), "This field is required");
+            
             if (value?.Length > 100)
                 throw new ArgumentOutOfRangeException(nameof(Sku), "The maximum value for this field is 100");
 

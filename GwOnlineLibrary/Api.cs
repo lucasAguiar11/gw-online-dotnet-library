@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using GwOnlineLibrary.Domain;
 using GwOnlineLibrary.Interfaces;
+using GwOnlineLibrary.Utilities;
 
 namespace GwOnlineLibrary;
 
@@ -36,7 +37,7 @@ internal class Api : IApi
         var client = new HttpClient
         {
             BaseAddress = new Uri(_baseUrl),
-            Timeout = TimeSpan.FromMinutes(3),
+            Timeout = TimeSpan.FromSeconds(Configuration.TimeoutRequest),
         };
         client.DefaultRequestHeaders.Add("Accept", "application/json");
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -46,19 +47,11 @@ internal class Api : IApi
 
     private string EncryptKey(string key)
     {
-        try
-        {
-            var rsaPublicKey = RSA.Create();
-            rsaPublicKey.ImportFromPem(key);
-            var encrypt = rsaPublicKey.Encrypt(Encoding.ASCII.GetBytes(_password), RSAEncryptionPadding.Pkcs1);
-            var pass = Convert.ToBase64String(encrypt);
-            return pass;
-        }
-        catch (CryptographicException e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        var rsaPublicKey = RSA.Create();
+        rsaPublicKey.ImportFromPem(key);
+        var encrypt = rsaPublicKey.Encrypt(Encoding.ASCII.GetBytes(_password), RSAEncryptionPadding.Pkcs1);
+        var pass = Convert.ToBase64String(encrypt);
+        return pass;
     }
 
     public async Task<TokenGw> LogonAsync()
@@ -74,7 +67,7 @@ internal class Api : IApi
 
         var response = await _client.PostAsync("/v1/logon", content);
 
-        response.EnsureSuccessStatusCode(); // todo: handle error
+        response.EnsureSuccessStatusCode();
 
         var responseString = await response.Content.ReadAsStringAsync();
         var gwToken = JsonSerializer.Deserialize<TokenGw>(responseString);
@@ -87,13 +80,16 @@ internal class Api : IApi
     public async Task<string> GetKeyAsync()
     {
         var response = await _client.GetAsync("/v1/getKey");
-        response.EnsureSuccessStatusCode();
+
+        if (!response.IsSuccessStatusCode)
+            throw new HttpRequestException("Can't get public key from gw");
+        
         var json = await response.Content.ReadAsStringAsync();
 
         var result = JsonSerializer.Deserialize<PublicKey>(json);
 
         if (result == null)
-            throw new ArgumentNullException(); // todo: alterar isso
+            throw new ArgumentNullException(nameof(result), "Invalid response from gw");
 
         return result.Key;
     }
@@ -104,6 +100,8 @@ internal class Api : IApi
         content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
         var response = await _client.PostAsync("/v2/transaction", content);
+        response.EnsureSuccessStatusCode();
+
         var json = await response.Content.ReadAsStringAsync();
 
         var result = JsonSerializer.Deserialize<TransactionResult>(json);
