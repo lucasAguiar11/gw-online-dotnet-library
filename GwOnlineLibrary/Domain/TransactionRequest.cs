@@ -37,8 +37,8 @@ public class TransactionRequest
     /// <summary>
     /// Card number
     /// </summary>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have between 12 and 19 characters</exception>
     [JsonPropertyName("pan")]
     public string Pan
     {
@@ -65,8 +65,8 @@ public class TransactionRequest
     /// <summary>
     /// Cardholder name embossed on the card
     /// </summary>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have between 2 and 50 characters</exception>
     [JsonPropertyName("cardholderName")]
     public string CardHolderName
     {
@@ -87,8 +87,8 @@ public class TransactionRequest
     /// <summary>
     /// Expiration card date. Format: "MM/AA"
     /// </summary>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must be 5 characters long</exception>
     [JsonPropertyName("expirationDate")]
     public string ExpirationDate
     {
@@ -115,7 +115,7 @@ public class TransactionRequest
     /// <summary>
     /// Card Code Verification
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must be 3 or 4 characters long</exception>
     [JsonPropertyName("cvv")]
     public string Cvv
     {
@@ -142,7 +142,7 @@ public class TransactionRequest
     /// <summary>
     /// Transaction amount
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException">The minimum value for this field is 0.01</exception>
     [JsonPropertyName("amount")]
     public decimal Amount
     {
@@ -171,7 +171,7 @@ public class TransactionRequest
     /// <summary>
     /// Number of installments
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException">This field must have a value between 1 and 18</exception>
     [JsonPropertyName("installments")]
     public int Installments
     {
@@ -189,7 +189,7 @@ public class TransactionRequest
     /// <summary>
     /// Connection source
     /// </summary>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
     [JsonPropertyName("site")]
     public string Site
     {
@@ -224,7 +224,7 @@ public class TransactionRequest
     /// <summary>
     /// Transaction Customer
     /// </summary>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
     [JsonPropertyName("customer")]
     public Customer Customer
     {
@@ -235,8 +235,8 @@ public class TransactionRequest
     /// <summary>
     /// Transaction Products
     /// </summary>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentNullException">This field is required</exception>
+    /// <exception cref="InvalidOperationException">This field must have at least one product</exception>
     [JsonPropertyName("products")]
     public List<Product> Products
     {

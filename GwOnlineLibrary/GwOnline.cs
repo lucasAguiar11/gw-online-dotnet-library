@@ -42,6 +42,25 @@ public class GwOnline : IGwOnline
         return result;
     }
 
+    /// <summary>
+    /// This service was designed as an option to verify the transaction situation,
+    /// in case of any situation that is not possible to receive the normal transaction result (like connectivity problems).
+    /// </summary>
+    /// <param name="tid"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<StatusResult> TransactionStatusAsync(string tid)
+    {
+        if (string.IsNullOrEmpty(tid))
+            throw new ArgumentNullException(nameof(tid), "This field is required");
+
+        await GetTokenAsync();
+
+        var result = await _api.TransactionStatusAsync(tid);
+        
+        return result;
+    }
+
     private async Task GetTokenAsync()
     {
         if (_lastTokenUpdate?.AddMinutes(25) > DateTimeOffset.Now)

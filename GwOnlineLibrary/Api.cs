@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using GwOnlineLibrary.Domain;
 using GwOnlineLibrary.Interfaces;
 using GwOnlineLibrary.Utilities;
@@ -14,6 +15,7 @@ internal class Api : IApi
     private readonly string _user;
     private readonly string _password;
     private HttpClient _client;
+    private JsonSerializerOptions _jsonOptions;
 
     internal Api(string baseUrl, string user, string password)
     {
@@ -30,6 +32,10 @@ internal class Api : IApi
             : password;
 
         ConfigClient();
+        _jsonOptions = new JsonSerializerOptions()
+        {
+            NumberHandling = JsonNumberHandling.AllowReadingFromString
+        };
     }
 
     private void ConfigClient()
@@ -70,9 +76,12 @@ internal class Api : IApi
         response.EnsureSuccessStatusCode();
 
         var responseString = await response.Content.ReadAsStringAsync();
-        var gwToken = JsonSerializer.Deserialize<TokenGw>(responseString);
+        var gwToken = JsonSerializer.Deserialize<TokenGw>(responseString, _jsonOptions);
 
-        _client.DefaultRequestHeaders.Add("x-access-token", gwToken.Token); // todo: verify
+        if(gwToken == null)
+            throw new Exception("Invalid response from gw");
+        
+        _client.DefaultRequestHeaders.Add("x-access-token", gwToken.Token);
 
         return gwToken;
     }
@@ -83,10 +92,10 @@ internal class Api : IApi
 
         if (!response.IsSuccessStatusCode)
             throw new HttpRequestException("Can't get public key from gw");
-        
+
         var json = await response.Content.ReadAsStringAsync();
 
-        var result = JsonSerializer.Deserialize<PublicKey>(json);
+        var result = JsonSerializer.Deserialize<PublicKey>(json, _jsonOptions);
 
         if (result == null)
             throw new ArgumentNullException(nameof(result), "Invalid response from gw");
@@ -104,7 +113,23 @@ internal class Api : IApi
 
         var json = await response.Content.ReadAsStringAsync();
 
-        var result = JsonSerializer.Deserialize<TransactionResult>(json);
+        var result = JsonSerializer.Deserialize<TransactionResult>(json, _jsonOptions);
+
+        return result;
+    }
+
+    public async Task<StatusResult> TransactionStatusAsync(string nsu)
+    {
+        var request = JsonSerializer.Serialize(new { tid = nsu });
+        var content = new StringContent(request, Encoding.UTF8, "application/json");
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        var response = await _client.PostAsync("/v1/verify", content);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        var result = JsonSerializer.Deserialize<StatusResult>(json, _jsonOptions);
 
         return result;
     }
